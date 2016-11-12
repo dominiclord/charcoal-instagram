@@ -1,0 +1,121 @@
+{
+    "sources": {
+        "charcoal.instagram.tag": {
+            "type": "database",
+            "table": "charcoal_instagram_tags"
+        }
+    },
+    "default_source": "charcoal.instagram.tag",
+
+    "labels": {
+        "name": "Instagram Tags",
+        "singular_name": "Instagram Tag",
+        "edit_item": {
+            "en": "Edit Tag",
+            "fr": "Modifier le tag"
+        },
+        "all_items": {
+            "en": "All Instagram Tags",
+            "fr": "Toutes les tags Instagram"
+        },
+        "menu_items": "Instagram Tags"
+    },
+
+    "properties": {
+        "id": {
+            "type": "id",
+            "mode": "custom"
+        },
+        "active": {
+            "type": "boolean"
+        }
+    },
+
+    "admin": {
+        "lists": {
+            "default": {
+                "properties": [
+                    "id",
+                    "active"
+                ],
+                "list_actions": [],
+                "properties_options": {}
+            }
+        },
+        "default_list": "default",
+
+        "forms": {
+            "default": {
+                "groups": {
+                    "infos": {
+                        "priority": 1,
+                        "title": "Information",
+                        "show_header": false,
+                        "layout": {
+                            "structure": [
+                                { "columns": [ 1, 1 ] }
+                            ]
+                        },
+                        "properties": [
+                            "id",
+                            "active"
+                        ]
+                    }
+                },
+                "sidebars": {
+                    "default": {}
+                }
+            }
+        },
+
+        "dashboards": {
+            "admin.edit": {
+                "layout": {
+                    "structure": [
+                        { "columns": [ 1 ] },
+                        { "columns": [ 1 ] },
+                        { "columns": [ 1 ] },
+                        { "columns": [ 1 ] }
+                    ]
+                },
+                "widgets": {
+                    "form.content": {
+                        "priority": 10,
+                        "type": "charcoal/admin/widget/objectForm",
+                        "form_ident": "default",
+                        "obj_type": "charcoal/instagram/object/tag",
+                        "group_display_mode": "tab"
+                    }
+                },
+                "sidemenu": {
+                    "widget_options": {
+                        "ident": "instagram"
+                    }
+                }
+            },
+            "admin.table": {
+                "layout": {
+                    "structure": [
+                        { "columns": [ 1 ] }
+                    ]
+                },
+                "widgets": {
+                    "list": {
+                        "type": "charcoal/support/admin/widget/table",
+                        "collection_ident": "default",
+                        "obj_type": "charcoal/instagram/object/tag",
+                        "data_sources": [ "request" ]
+                    }
+                },
+                "sidemenu": {
+                    "widget_options": {
+                        "ident": "instagram"
+                    }
+                }
+            }
+        },
+        "default_create_dashboard": "admin.edit",
+        "default_edit_dashboard": "admin.edit",
+        "default_collection_dashboard": "admin.table"
+    }
+}

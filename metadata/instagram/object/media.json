@@ -1,0 +1,157 @@
+{
+    "sources": {
+        "charcoal.instagram.media": {
+            "type": "database",
+            "table": "charcoal_instagram_medias"
+        }
+    },
+    "default_source": "charcoal.instagram.media",
+
+    "labels": {
+        "name": "Instagram Medias",
+        "singular_name": "Instagram Media",
+        "edit_item": {
+            "en": "Edit Media",
+            "fr": "Modifier le média"
+        },
+        "all_items": {
+            "en": "All Instagram Medias",
+            "fr": "Toutes les médias Instagram"
+        },
+        "menu_items": "Instagram Medias"
+    },
+
+    "properties": {
+        "id": {
+            "type": "id",
+            "mode": "uuid"
+        },
+        "active": {
+            "type": "boolean"
+        },
+        "created": {
+            "type": "date-time",
+            "input_type": "charcoal/admin/property/input/readonly"
+        },
+        "tags": {
+            "type": "object",
+            "obj_type": "charcoal/instagram/object/tag",
+            "multiple": true
+        },
+        "caption": {
+            "type": "string"
+        },
+        "user": {
+            "type": "object",
+            "obj_type": "charcoal/instagram/object/user"
+        },
+        "image": {
+            "type": "string"
+        },
+        "type": {
+            "type": "string"
+        },
+        "json": {
+            "type": "structure"
+        }
+    },
+
+    "admin": {
+        "lists": {
+            "default": {
+                "properties": [
+                    "created",
+                    "caption",
+                    "user",
+                    "tags"
+                ],
+                "list_actions": [],
+                "properties_options": {}
+            }
+        },
+        "default_list": "default",
+
+        "forms": {
+            "default": {
+                "groups": {
+                    "infos": {
+                        "priority": 1,
+                        "title": "Information",
+                        "show_header": false,
+                        "layout": {
+                            "structure": [
+                                { "columns": [ 1, 2 ] },
+                                { "columns": [ 2, 1 ] },
+                                { "columns": [ 1, 1 ] },
+                                { "columns": [ 1, 1 ] }
+                            ]
+                        },
+                        "properties": [
+                            "id",
+                            "user",
+                            "created",
+                            "active",
+                            "tags",
+                            "caption",
+                            "image",
+                            "type"
+                        ]
+                    }
+                },
+                "sidebars": {
+                    "default": {}
+                }
+            }
+        },
+
+        "dashboards": {
+            "admin.edit": {
+                "layout": {
+                    "structure": [
+                        { "columns": [ 1 ] },
+                        { "columns": [ 1 ] },
+                        { "columns": [ 1 ] },
+                        { "columns": [ 1 ] }
+                    ]
+                },
+                "widgets": {
+                    "form.content": {
+                        "priority": 10,
+                        "type": "charcoal/admin/widget/objectForm",
+                        "form_ident": "default",
+                        "obj_type": "charcoal/instagram/object/media",
+                        "group_display_mode": "tab"
+                    }
+                },
+                "sidemenu": {
+                    "widget_options": {
+                        "ident": "instagram"
+                    }
+                }
+            },
+            "admin.table": {
+                "layout": {
+                    "structure": [
+                        { "columns": [ 1 ] }
+                    ]
+                },
+                "widgets": {
+                    "list": {
+                        "type": "charcoal/support/admin/widget/table",
+                        "collection_ident": "default",
+                        "obj_type": "charcoal/instagram/object/media",
+                        "data_sources": [ "request" ]
+                    }
+                },
+                "sidemenu": {
+                    "widget_options": {
+                        "ident": "instagram"
+                    }
+                }
+            }
+        },
+        "default_create_dashboard": "admin.edit",
+        "default_edit_dashboard": "admin.edit",
+        "default_collection_dashboard": "admin.table"
+    }
+}

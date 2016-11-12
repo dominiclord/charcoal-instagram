@@ -1,0 +1,132 @@
+{
+    "sources": {
+        "charcoal.instagram.scrape.record": {
+            "type": "database",
+            "table": "charcoal_instagram_scrape_records"
+        }
+    },
+    "default_source": "charcoal.instagram.scrape.record",
+
+    "properties": {
+        "id": {
+            "type": "id",
+            "mode": "uniqid"
+        },
+        "ident": {
+            "type": "string",
+            "readonly": true
+        },
+        "repository": {
+            "type": "string",
+            "allow_null": false
+        },
+        "method": {
+            "type": "string",
+            "allow_null": false
+        },
+        "filter": {
+            "type": "string",
+            "allow_null": false
+        },
+        "ts": {
+            "type": "date-time",
+            "label": {
+                "en": "Timestamp",
+                "fr": "Horodatage"
+            }
+        }
+    },
+
+    "admin": {
+        "lists": {
+            "default": {
+                "properties": [
+                    "ident",
+                    "ts"
+                ],
+                "list_actions": [],
+                "properties_options": {}
+            }
+        },
+        "default_list": "default",
+
+        "forms": {
+            "default": {
+                "groups": {
+                    "infos": {
+                        "priority": 1,
+                        "title": "Information",
+                        "show_header": false,
+                        "layout": {
+                            "structure": [
+                                { "columns": [ 1, 1 ] },
+                                { "columns": [ 1, 1 ] },
+                                { "columns": [ 1, 1 ] }
+                            ]
+                        },
+                        "properties": [
+                            "ident",
+                            "repository",
+                            "method",
+                            "filter",
+                            "ts"
+                        ]
+                    }
+                },
+                "sidebars": {
+                    "default": {}
+                }
+            }
+        },
+
+        "dashboards": {
+            "admin.edit": {
+                "layout": {
+                    "structure": [
+                        { "columns": [ 1 ] },
+                        { "columns": [ 1 ] },
+                        { "columns": [ 1 ] },
+                        { "columns": [ 1 ] }
+                    ]
+                },
+                "widgets": {
+                    "form.content": {
+                        "priority": 10,
+                        "type": "charcoal/admin/widget/objectForm",
+                        "form_ident": "default",
+                        "obj_type": "charcoal/instagram/object/scrape-record",
+                        "group_display_mode": "tab"
+                    }
+                },
+                "sidemenu": {
+                    "widget_options": {
+                        "ident": "instagram"
+                    }
+                }
+            },
+            "admin.table": {
+                "layout": {
+                    "structure": [
+                        { "columns": [ 1 ] }
+                    ]
+                },
+                "widgets": {
+                    "list": {
+                        "type": "charcoal/support/admin/widget/table",
+                        "collection_ident": "default",
+                        "obj_type": "charcoal/instagram/object/scrape-record",
+                        "data_sources": [ "request" ]
+                    }
+                },
+                "sidemenu": {
+                    "widget_options": {
+                        "ident": "instagram"
+                    }
+                }
+            }
+        },
+        "default_create_dashboard": "admin.edit",
+        "default_edit_dashboard": "admin.edit",
+        "default_collection_dashboard": "admin.table"
+    }
+}

@@ -1,0 +1,137 @@
+{
+    "sources": {
+        "charcoal.instagram.user": {
+            "type": "database",
+            "table": "charcoal_instagram_users"
+        }
+    },
+    "default_source": "charcoal.instagram.user",
+
+    "labels": {
+        "name": "Instagram Users",
+        "singular_name": "Instagram User",
+        "edit_item": {
+            "en": "Edit User",
+            "fr": "Modifier l'utilisateur"
+        },
+        "all_items": {
+            "en": "All Instagram Users",
+            "fr": "Toutes les utilisateur Instagram"
+        },
+        "menu_items": "Instagram Users"
+    },
+
+    "properties": {
+        "id": {
+            "type": "id",
+            "mode": "uuid",
+            "readonly": true
+        },
+        "username": {
+            "type": "string"
+        },
+        "full_name": {
+            "type": "string"
+        },
+        "profile_picture": {
+            "type": "string"
+        },
+        "active": {
+            "type": "boolean"
+        }
+    },
+
+    "admin": {
+        "lists": {
+            "default": {
+                "properties": [
+                    "username",
+                    "full_name",
+                    "active"
+                ],
+                "list_actions": [],
+                "properties_options": {}
+            }
+        },
+        "default_list": "default",
+
+        "forms": {
+            "default": {
+                "groups": {
+                    "infos": {
+                        "priority": 1,
+                        "title": "Information",
+                        "show_header": false,
+                        "layout": {
+                            "structure": [
+                                { "columns": [ 1, 1 ] },
+                                { "columns": [ 1, 1 ] },
+                                { "columns": [ 1 ] }
+                            ]
+                        },
+                        "properties": [
+                            "id",
+                            "username",
+                            "full_name",
+                            "profile_picture",
+                            "active"
+                        ]
+                    }
+                },
+                "sidebars": {
+                    "default": {}
+                }
+            }
+        },
+
+        "dashboards": {
+            "admin.edit": {
+                "layout": {
+                    "structure": [
+                        { "columns": [ 1 ] },
+                        { "columns": [ 1 ] },
+                        { "columns": [ 1 ] },
+                        { "columns": [ 1 ] }
+                    ]
+                },
+                "widgets": {
+                    "form.content": {
+                        "priority": 10,
+                        "type": "charcoal/admin/widget/objectForm",
+                        "form_ident": "default",
+                        "obj_type": "charcoal/instagram/object/user",
+                        "group_display_mode": "tab"
+                    }
+                },
+                "sidemenu": {
+                    "widget_options": {
+                        "ident": "instagram"
+                    }
+                }
+            },
+            "admin.table": {
+                "layout": {
+                    "structure": [
+                        { "columns": [ 1 ] }
+                    ]
+                },
+                "widgets": {
+                    "list": {
+                        "type": "charcoal/support/admin/widget/table",
+                        "collection_ident": "default",
+                        "obj_type": "charcoal/instagram/object/user",
+                        "data_sources": [ "request" ]
+                    }
+                },
+                "sidemenu": {
+                    "widget_options": {
+                        "ident": "instagram"
+                    }
+                }
+            }
+        },
+        "default_create_dashboard": "admin.edit",
+        "default_edit_dashboard": "admin.edit",
+        "default_collection_dashboard": "admin.table"
+    }
+}
