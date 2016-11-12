@@ -1,0 +1,46 @@
+{
+    "name": "dominiclord/charcoal-instagram",
+    "description": "Adds support for saving and querying Instagram posts as Charcoal Models.",
+    "homepage": "https://charcoal.locomotive.ca",
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/dominiclord/charcoal-instagram/issues",
+        "source": "https://github.com/dominiclord/charcoal-instagram"
+    },
+    "authors": [
+        {
+            "name": "Dominic Lord",
+            "email": "dom@locomotive.ca"
+        },
+        {
+            "name": "Locomotive",
+            "homepage": "https://locomotive.ca"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "mcaskill/charcoal-support": "dev-master",
+        "larabros/elogram": "^1.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8",
+        "squizlabs/php_codesniffer": "^2.4",
+        "satooshi/php-coveralls":"~1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Charcoal\\Instagram\\": "src/Charcoal/Instagram"
+        }
+    },
+    "scripts": {
+        "test": [
+            "@phplint",
+            "@phpunit",
+            "@phpcs"
+        ],
+        "phplint": "find {src,tests} -name '*.php' -print0 | xargs -0 -n1 -P8 php -l | grep -v '^No syntax errors detected'; test $? -eq 1",
+        "phpunit": "php vendor/bin/phpunit --configuration tests/phpunit.xml --coverage-text",
+        "phpcs": "php vendor/bin/phpcs -ps --colors --standard=phpcs.xml src/",
+        "phpcbf": "php vendor/bin/phpcbf -ps --colors --standard=phpcs.xml src/ tests/"
+    }
+}
