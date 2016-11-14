@@ -19,7 +19,7 @@ use \Charcoal\Instagram\Object\User;
 use \Charcoal\Instagram\Object\ScrapeRecord;
 
 /**
- * A basic search mediator
+ * Scraping class that connects to Instagram API and converts data to Charcoal Objects.
  */
 class Scraper
 {
@@ -202,14 +202,26 @@ class Scraper
 
             // Loop through all media and store them with Charcoal if they don't already exist
             foreach ($rawMedias as $media) {
-                $mediaModel = $this->modelFactory()->create(Media::class)->load($media['id']);
+                $mediaModel = $this->modelFactory()->create(Media::class);
+
+                if (!$mediaModel->source()->tableExists()) {
+                    $mediaModel->source()->createTable();
+                }
+
+                $mediaModel->load($media['id']);
 
                 if ($mediaModel->id() === null) {
                     $tags = [];
 
                     foreach($media['tags'] as $tag) {
                         // Save the hashtags if not already saved
-                        $tagModel = $this->modelFactory()->create(Tag::class)->load($tag);
+                        $tagModel = $this->modelFactory()->create(Tag::class);
+
+                        if (!$tagModel->source()->tableExists()) {
+                            $tagModel->source()->createTable();
+                        }
+
+                        $tagModel->load($tag);
 
                         if ($tagModel->id() === null) {
                             $tagModel->setData([
@@ -223,7 +235,13 @@ class Scraper
 
                     // Save the user if not already saved
                     $userData = $media['user'];
-                    $userModel = $this->modelFactory()->create(User::class)->load($userData['id']);
+                    $userModel = $this->modelFactory()->create(User::class);
+
+                    if (!$userModel->source()->tableExists()) {
+                        $userModel->source()->createTable();
+                    }
+
+                    $userModel->load($userData['id']);
 
                     if ($userModel->id() === null) {
                         $userModel->setData([
@@ -262,7 +280,12 @@ class Scraper
         return $this->results;
     }
 
-
+    /**
+     * Attempt to get the latest ScrapeRecord according to specific properties
+     *
+     * @param  array  $options Array of options used to create a new ScrapeRecord
+     * @return ModelInterface  A ScrapeRecord instance.
+     */
     private function fetchRecentScrapeRecord(array $options = [])
     {
         // Create a proto model to generate the ident
@@ -273,6 +296,10 @@ class Scraper
                 'method' => $options['method'],
                 'filter' => $options['filter']
             ]);
+
+        if (!$proto->source()->tableExists()) {
+            $proto->source()->createTable();
+        }
 
         $earlierDate = new DateTime('now - 1 hour');
 
