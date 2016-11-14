@@ -35,7 +35,7 @@ trait ScraperAwareTrait
     /**
      * Retrieve the scraper.
      *
-     * @throws RuntimeException If the search runner was not previously set.
+     * @throws RuntimeException If the scrape was not previously set.
      * @return Scraper
      */
     public function instagramScraper()
